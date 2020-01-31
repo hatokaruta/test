@@ -1,0 +1,9 @@
+cd C:\bin\OpenSSH-Win64
+powershell.exe -ExecutionPolicy Bypass -File install-sshd.ps1
+New-NetFirewallRule -Name sshd -DisplayName 'OpenSSH Server (sshd)' -Enabled True -Direction Inbound -Protocol TCP -Action Allow -LocalPort 22
+net start sshd
+Set-Service sshd -StartupType Automatic
+copy .\sshd_config_default .\sshd_config
+Restart-Service sshd
+
+powershell.exe -ExecutionPolicy Bypass -File uninstall-sshd.ps1
